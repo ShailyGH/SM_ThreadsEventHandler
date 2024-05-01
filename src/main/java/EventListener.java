@@ -71,6 +71,6 @@ public class EventListener implements Runnable{
     public void reply()
     {
         System.out.println(this.messageToReplyWith);
-        eventTracker.handle("", null);
+        eventTracker.handle("", () -> {});
     }
 }

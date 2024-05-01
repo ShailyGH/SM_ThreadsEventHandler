@@ -39,6 +39,9 @@ public class EventTracker implements Tracker {
         if(tracker.containsKey(message))
         {
             tracker.replace(message, tracker.get(message)-1);
+            if (tracker.get(message) == 0) {
+                tracker.remove(message);
+            }
         }
     }
 
