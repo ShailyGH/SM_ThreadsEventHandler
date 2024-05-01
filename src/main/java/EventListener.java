@@ -1,4 +1,4 @@
-public class EventListener {
+public class EventListener implements Runnable{
 
     private String messageToListenFor;
     private String messageToReplyWith;
@@ -16,17 +16,61 @@ public class EventListener {
         this.eventTracker = tracker;
     }
 
-    public void run() {
+    public void run()
+    {
+        try
+        {
+            while (true)
+            {
+                if (shouldReply())
+                {
+                    System.out.println(this.messageToReplyWith);
+                }
+                Thread.sleep(500);
+            }
+        }
+        catch (InterruptedException e)
+        {
+            if (readyToQuit())
+            {
+                System.out.println("Gracefully quit");
+            } else
+            {
+                while (!readyToQuit())
+                {
+                    try
+                    {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex)
+                    {
+                        System.out.println("Forcefully quit");
+                    }
+                }
+            }
+        }
     }
 
-    public Boolean readyToQuit() {
-        return null;
+    public Boolean readyToQuit()
+    {
+        if(!Thread.currentThread().isInterrupted())
+        {
+            Thread.currentThread().interrupt();
+            return Thread.currentThread().isInterrupted();
+        }
+        else
+        {
+            return !Thread.currentThread().isAlive();
+        }
     }
 
-    public Boolean shouldReply() {
-        return null;
+    public Boolean shouldReply()
+    {
+        return this.eventTracker.has(this.messageToListenFor);
     }
 
-    public void reply() {
+    public void reply()
+    {
+        System.out.println(this.messageToReplyWith);
+        eventTracker.handle("", null);
     }
 }

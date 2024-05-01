@@ -10,6 +10,10 @@ public class EventTracker implements Tracker {
     private EventTracker() {
         this.tracker = new HashMap<>();
     }
+    public Map<String, Integer> tracker()
+    {
+        return tracker;
+    }
 
     synchronized public static EventTracker getInstance() {
         return INSTANCE;
