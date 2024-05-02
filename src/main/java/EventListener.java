@@ -33,17 +33,19 @@ public class EventListener implements Runnable{
         {
             if (readyToQuit())
             {
-                System.out.println("Gracefully quit");
-            } else
+                System.out.println("Ready to Quit");
+            }
+            else
             {
                 while (!readyToQuit())
                 {
                     try
                     {
                         Thread.sleep(100);
-                    } catch (InterruptedException ex)
+                    }
+                    catch (InterruptedException ex)
                     {
-                        System.out.println("Forcefully quit");
+                        System.out.println("Not Ready to Quit");
                     }
                 }
             }
